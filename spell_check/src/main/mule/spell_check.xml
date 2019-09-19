@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:oauth="http://www.mulesoft.org/schema/mule/oauth" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="5c7f645b-f5a4-4c88-8b1d-7873a6a69cea" >
+		<http:listener-connection host="0.0.0.0" port="8082" />
+	</http:listener-config>
+	<flow name="spell_checkFlow1" doc:id="1cab5b3f-31cf-4c61-8abe-f524558b6103" >
+		<file:read doc:name="Read" doc:id="9c860a14-cbef-4508-82e7-a4c1c6f27722" />
+	</flow>
+	<flow name="spell_checkFlow3" doc:id="361e2134-cfd0-42f5-a748-fd0217ce45c5" >
+		<http:load-static-resource doc:name="Load static resource" doc:id="daa76f0b-f0a4-4c7b-a1a1-44e97e55dd3f" />
+	</flow>
+	<flow name="spell_checkFlow4" doc:id="d6ffae7d-a58a-4ad3-a550-7aba78f47d23" >
+		<http:request method="GET" doc:name="Request" doc:id="99ce5a74-460a-4300-9dfb-12ee2af3ff72" />
+	</flow>
+	<flow name="spell_checkFlow5" doc:id="e5eb0bf2-950f-4f2b-aff1-e610f4db300b" >
+		<http:basic-security-filter doc:name="Basic security filter" doc:id="ab03f964-5d34-436b-afb9-4624f3e459fe" />
+	</flow>
+	<flow name="spell_checkFlow6" doc:id="dce9d5e4-b924-4cf2-b32e-39a0d6ca501c" >
+		<file:copy doc:name="Copy" doc:id="34894fb0-9bb8-4649-a0c4-afd529f5cb76" />
+	</flow>
+	<flow name="spell_checkFlow8" doc:id="8ecc72c3-2cf6-478b-aa52-55245168c233" >
+		<file:delete doc:name="Delete" doc:id="b152de5c-4e02-47e7-91b0-33d9c7cb4833" />
+	</flow>
+	<flow name="spell_checkFlow7" doc:id="3b924115-1eb4-4725-9cf6-4b1866e9e170" >
+		<file:create-directory doc:name="Create directory" doc:id="1feaf855-64cc-49e4-96f2-67de70b25469" />
+	</flow>
+	<flow name="spell_checkFlow2" doc:id="0aaaf38c-b392-474c-8d3d-49e44d0faa62" >
+		<file:write doc:name="Write" doc:id="41a4d05d-aee4-4a27-bfe3-9df352b0cbd3" />
+	</flow>
+	<flow name="spell_checkFlow" doc:id="b3929096-70a3-4050-ae69-27b95acc3500" >
+		<http:listener doc:name="Listener" doc:id="bab8f270-fc38-4a92-a3aa-90a5959d094e" config-ref="HTTP_Listener_config" path="/spellcheck"/>
+		<set-variable value="" doc:name="Set response var" doc:id="d9396051-67b6-4bcb-bf93-7d32f037e954" />
+		<foreach doc:name="For Each" doc:id="bdcc6384-bfb1-4fd6-9a5f-8b39797568fd" >
+			<set-variable value="" doc:name="Set city var" doc:id="3dd058a1-d370-4e47-bf92-fdacdf70c5d6" />
+			<logger level="INFO" doc:name="Logger" doc:id="94d9355c-b2b2-4e20-bc54-ac14d545584c" />
+			<http:request method="GET" doc:name="Request" doc:id="6285083c-d335-4f41-a96c-990115016c92" />
+			<ee:transform doc:name="Append to response var" doc:id="968c3c31-34a6-4946-a03d-880549d03c6d" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+			<logger level="INFO" doc:name="Logger" doc:id="79054b0a-20df-431a-9c7b-cc95773fde88" />
+		</foreach>
+		<ee:transform doc:name="Set Response" doc:id="566153ae-f6ec-4fee-afbe-b0daeed7cd09" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

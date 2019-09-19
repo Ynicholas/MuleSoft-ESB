@@ -1,0 +1,17 @@
+{
+  "sampleData": {
+    "472a9ec4-afc5-44af-a4c8-8af08bbe7c8d": {
+      "payload": "sample_data/json.json"
+    },
+    "fe2b22fd-453d-40dd-87cf-db39aad4343f": {
+      "payload": "sample_data/listAllFlightsResponse_3.xml",
+      "attributes": "sample_data/httprequestattributes.dwl"
+    },
+    "ddccb5b9-6683-461d-b91b-95cc5383b255": {
+      "payload": "sample_data/object.dwl"
+    },
+    "a3d624a6-eb62-4bb2-acd4-d2758309fd0b": {
+      "payload": "sample_data/json_1.json"
+    }
+  }
+}

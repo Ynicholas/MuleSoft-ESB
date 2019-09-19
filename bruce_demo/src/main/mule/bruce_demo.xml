@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="57cea6bb-a786-4bf1-a3be-98617ada462b" >
+		<http:listener-connection host="localhost" port="8085" />
+	</http:listener-config>
+	<flow name="bruce_demoFlow" doc:id="da29664f-3d09-496d-8c86-5c926e0d414a" >
+		<http:listener doc:name="Listener" doc:id="4cf4b71e-e2b1-4e67-9c7e-38226e10347b" path="/bruce" config-ref="HTTP_Listener_config"/>
+		<set-payload value="hello world" doc:name="Set Payload" doc:id="2369ff29-dc18-4b01-a176-ec976d829243" />
+		<logger level="INFO" doc:name="Logger" doc:id="80d1e91a-775a-4a56-a8a3-4ba791f0ed12" message="这个是我的log"/>
+	</flow>
+</mule>
